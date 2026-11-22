@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Pricing System</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            text-align: center;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #1e3a8a;
+        }
+
+        table {
+            margin: 30px auto;
+            width: 90%;
+            background: white;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #2563eb;
+            color: white;
+        }
+
+        input {
+            width: 70px;
+            padding: 7px;
+        }
+
+        button {
+            padding: 9px 15px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        .price {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Dynamic Demand-Based Pricing System</h1>
+
+    <p>Product prices are calculated according to demand and stock availability.</p>
+
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Base Price</th>
+            <th>Demand</th>
+            <th>Available Stock</th>
+            <th>Dynamic Price</th>
+            <th>Update</th>
+        </tr>
+
+        {% for product in products %}
+
+        <tr>
+            <form action="/update" method="POST">
+
+                <td>{{ product.name }}</td>
+
+                <td>₹{{ product.base_price }}</td>
+
+                <td>
+                    <input type="number"
+                           name="demand"
+                           value="{{ product.demand }}"
+                           min="0"
+                           required>
+                </td>
+
+                <td>
+                    <input type="number"
+                           name="stock"
+                           value="{{ product.stock }}"
+                           min="0"
+                           required>
+                </td>
+
+                <td class="price">
+                    ₹{{ product.dynamic_price }}
+                </td>
+
+                <td>
+                    <input type="hidden"
+                           name="product_id"
+                           value="{{ product.id }}">
+
+                    <button type="submit">Update</button>
+                </td>
+
+            </form>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+</body>
+</html>
+
